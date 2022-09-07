@@ -42,7 +42,98 @@ namespace CaloTriggerTowerDefs{
    return calo_tower_id;
  }
 
+ inline CaloTriggerTowerDefs::keytype encode_towerid(const CalorimeterId calo_id, const unsigned int tower_index)
+   {
+     CaloTriggerTowerDefs::keytype calo_tower_id = 0;
 
+     if (tower_index < 0xFFFFFF)
+     {
+       calo_tower_id = (calo_id << CaloTriggerTowerDefs::tower_idbits) + tower_index;
+     }
+     else
+     {
+       std::cout << "too large index; index: " << tower_index
+                 << " (max val " << 0xFFFFFF << ")" << std::endl;
+       exit(1);
+     }
+
+     return calo_tower_id;
+   }
+
+   inline unsigned int decode_index(const unsigned int calo_tower_id)
+  {
+    return (calo_tower_id) &0xFFFFFF;
+  }
+
+  /*! Extract tower index 1 of calorimeter tower from CaloTowerID
+   */
+  inline unsigned int decode_index1(const unsigned int calo_tower_id)
+  {
+    return (calo_tower_id >> CaloTriggerTowerDefs::index1_idbits) & 0xFFF;
+  }
+
+  /*! Extract tower index 2 of calorimeter tower from CaloTowerID
+   */
+  inline unsigned int decode_index2(const unsigned int calo_tower_id)
+  {
+    return calo_tower_id & 0xFFF;
+  }
+
+  inline std::string convert_caloid_to_name(const CaloTriggerTowerDefs::CalorimeterId calo_id)
+  {
+    switch (calo_id)
+    {
+    case NONE:
+      return "NONE";
+      break;
+
+    case DRCALO:
+      return "DRCALO";
+      break;
+
+    case CEMC:
+      return "CEMC";
+      break;
+
+    case HCALIN:
+      return "HCALIN";
+      break;
+
+    case HCALOUT:
+      return "HCALOUT";
+      break;
+
+    default:
+          std::cout
+              << "Invalid calorimeter ID passed to RawTowerDefs::convert_caloid_to_name"
+              << std::endl;
+          exit(1);
+    }
+  }
+
+  inline CaloTriggerTowerDefs::CalorimeterId convert_name_to_caloid(const std::string &caloname)
+ {
+   if (caloname == "NONE")
+     return NONE;
+
+   else if (caloname == "CEMC")
+     return CEMC;
+
+   else if (caloname == "DRCALO")
+     return DRCALO;
+
+   else if (caloname == "HCALIN")
+     return HCALIN;
+
+   else if (caloname == "HCALOUT")
+    return HCALOUT;
+   else
+   {
+     std::cout << "Invalid calorimeter name " << caloname
+               << " passed to RawTowerDefs::convert_name_to_caloid" << std::endl;
+     exit(1);
+   }
+  }
 }
 
 #endif
