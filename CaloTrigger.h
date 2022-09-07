@@ -12,7 +12,8 @@
 #include <string>
 
 class PHCompositeNode;
-
+class CaloTriggerElement;
+class CaloTriggerElementMap;
 
 class CaloTrigger : public SubsysReco
 {
@@ -30,6 +31,9 @@ public:
 
 private:
   int CreateNode(PHCompositeNode *topNode);
+  CaloTriggerElementMap _hcalin_trigger_map;
+  CaloTriggerElementMap _hcalout_trigger_map;
+  CaloTriggerElementMap _emcal_trigger_map;
 
 };
 

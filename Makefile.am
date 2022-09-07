@@ -10,7 +10,9 @@ AM_LDFLAGS = \
   -L$(OFFLINE_MAIN)/lib
 
 pkginclude_HEADERS = \
-  CaloTrigger.h
+  CaloTrigger.h \
+	CaloTriggerElement.h \
+	CaloTriggerElementMap.h
 
 pcmdir = $(libdir)
 
@@ -18,7 +20,9 @@ lib_LTLIBRARIES = \
   libcalotrigger.la
 
 libcalotrigger_la_SOURCES = \
-  CaloTrigger.cc
+  CaloTrigger.cc \
+	CaloTriggerElement.cc \
+	CaloTriggerElementMap.cc
 
 libcalotrigger_la_LIBADD = \
   -lphool \
