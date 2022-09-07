@@ -35,9 +35,6 @@ private:
   float _phi_high, _phi_low;
 
   RawTowerContainer _raw_calo_towers;
-
-  void AddRawTower(RawTower* raw_calo_tower);
-
 };
 
 #endif
