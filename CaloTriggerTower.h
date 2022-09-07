@@ -5,33 +5,38 @@
 #ifndef CALOTRIGGERTOWER_H
 #define CALOTRIGGERTOWER_H
 
-#include <fun4all/SubsysReco.h>
-#include <phool/PHCompositeNode.h>
-#include <phool/PHRandomSeed.h>
-#include <phool/getClass.h>
+#include <phool/PHObject.h>
+
+#include <calobase/RawTower.h>
+#include <calobase/RawTowerContainer.h>
+
 #include <string>
 
-class PHCompositeNode;
+class RawTower;
+class RawTowerContainer;
 
-class CaloTriggerTower
+class CaloTriggerTower : public PHObject
 {
 public:
     CaloTriggerTower();
     ~CaloTriggerTower() override;
 
     void SetLayer(int layer) { _layer = layer; };
-    void SetEta(int eta) { _eta = eta; };
-    void SetPhi(int phi) { _phi = phi; };
-
+    void SetEtaIndex(int ieta) { _index_eta = ieta; };
+    void SetPhiIndex(int iphi) { _index_phi = iphi; };
+    void InitateTower();
 private:
   int _layer;
   int _hit;
-  int _phi;
-  int _eta;
+  int _index_phi;
+  int _index_eta;
 
-  std::vector<std::pair<int, CaloTriggerElement*>> _calo_trigger_elements;
+  float _eta_high, _eta_low;
+  float _phi_high, _phi_low;
 
-  void AddElement(CaloTriggerElement* calo_trigger_element);
+  RawTowerContainer _raw_calo_towers;
+
+  void AddRawTower(RawTower* raw_calo_tower);
 
 };
 

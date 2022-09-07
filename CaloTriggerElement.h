@@ -5,18 +5,19 @@
 #ifndef CALOTRIGGERELEMENT_H
 #define CALOTRIGGERELEMENT_H
 
-#include <fun4all/SubsysReco.h>
-#include <phool/PHCompositeNode.h>
-#include <phool/PHRandomSeed.h>
-#include <phool/getClass.h>
-#include <string>
+#include <phool/PHObject.h>
+#include <map>
+#include "CaloTriggerTowerDefs.h"
+#include "CaloTriggerTower.h"
 
-class PHCompositeNode;
 class CaloTriggerTower;
 
-class CaloTriggerElement
+class CaloTriggerElement : public PHObject
 {
 public:
+    typedef std::map<CaloTriggerTowerDefs::keytype, CaloTriggerTower *> Map;
+    typedef Map::iterator Iterator;
+
     CaloTriggerElement();
     ~CaloTriggerElement() override;
 

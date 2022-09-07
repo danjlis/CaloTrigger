@@ -12,7 +12,8 @@ AM_LDFLAGS = \
 pkginclude_HEADERS = \
   CaloTrigger.h \
 	CaloTriggerElement.h \
-	CaloTriggerElementMap.h
+	CaloTriggerElementMap.h \
+	CaloTriggerTower.h
 
 pcmdir = $(libdir)
 
@@ -22,7 +23,8 @@ lib_LTLIBRARIES = \
 libcalotrigger_la_SOURCES = \
   CaloTrigger.cc \
 	CaloTriggerElement.cc \
-	CaloTriggerElementMap.cc
+	CaloTriggerElementMap.cc \
+	CaloTriggerTower.cc 
 
 libcalotrigger_la_LIBADD = \
   -lphool \

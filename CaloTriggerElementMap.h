@@ -4,17 +4,16 @@
 
 #ifndef CALOTRIGGERELEMENTMAP_H
 #define CALOTRIGGERELEMENTMAP_H
+#include <phool/PHObject.h>
+#include "CaloTriggerTower.h"
+#include "CaloTriggerElement.h"
 
-#include <fun4all/SubsysReco.h>
-#include <phool/PHCompositeNode.h>
-#include <phool/PHRandomSeed.h>
-#include <phool/getClass.h>
 #include <string>
 
 class PHCompositeNode;
 class CaloTriggerElement;
 
-class CaloTriggerElementMap
+class CaloTriggerElementMap : PHObject
 {
 public:
     CaloTriggerElementMap();
