@@ -7,60 +7,85 @@
 
 #include <iostream>
 
-#include "CaloTriggerTowerDefs.h"
 #include "CaloTriggerTower.h"
+#include "CaloTriggerTowerDefs.h"
 
-class CaloTriggerTower;
-
-class CaloTriggerElement : public PHObject
+void CaloTriggerElement::Reset()
 {
-public:
-    typedef std::map<CaloTriggerTowerDefs::keytype, CaloTriggerTower *> Map;
-    typedef Map::iterator Iterator;
-    typedef Map::const_iterator ConstIterator;
-    typedef std::pair<Iterator, Iterator> Range;
-    typedef std::pair<ConstIterator, ConstIterator> ConstRange;
+  while (_towers.begin() != _towers.end())
+  {
+    delete _towers.begin()->second;
+    _towers.erase(_towers.begin());
+  }
+}
+int CaloTriggerElement::isValid(){
+  return (!_towers.empty());
+}
+void CaloTriggerElement::identify(std::ostream &os = std::cout)
+{
+  os << "CaloTriggerTower, number of towers: " << size() << std::endl;
+}
 
+CaloTriggerElement::ConstIterator CaloTriggerElement::AddTower(const unsigned int ieta, const unsigned int iphi, CaloTriggerTower *twr)
+{
 
-    CaloTriggerElement(CaloTriggerTowerDefs::CalorimeterId caloid = CaloTriggerTowerDefs::NONE) : _caloid(caloid){}
+}
 
-    ~CaloTriggerElement() override;
+CaloTriggerElement::ConstIterator CaloTriggerElement::AddTower(CaloTriggerTowerDefs::keytype key, CaloTriggerTower *twr)
+{
 
-    void Reset() override;
-    int isValid() const override;
-    void identify(std::ostream &os = std::cout) const override;
+}
 
+CaloTriggerTower *CaloTriggerElement::getTower(CaloTriggerTowerDefs::keytype key)
+{
 
-      void setCalorimeterID(CaloTriggerTowerDefs::CalorimeterId caloid) { _caloid = caloid; }
-      CaloTriggerTowerDefs::CalorimeterId getCalorimeterID() { return _caloid; }
+}
+const CaloTriggerTower *CaloTriggerElement::getTower(CaloTriggerTowerDefs::keytype key){
 
-      ConstIterator AddTower(const unsigned int ieta, const unsigned int iphi, CaloTriggerTower *twr);
-      ConstIterator AddTower(CaloTriggerTowerDefs::keytype key, CaloTriggerTower *twr);
+}
 
-      CaloTriggerTower *getTower(CaloTriggerTowerDefs::keytype key);
-      const CaloTriggerTower *getTower(CaloTriggerTowerDefs::keytype key) const;
+CaloTriggerTower *CaloTriggerElement::getTower(const unsigned int ieta, const unsigned int iphi)
+{
 
-      CaloTriggerTower *getTower(const unsigned int ieta, const unsigned int iphi);
-      const CaloTriggerTower *getTower(const unsigned int ieta, const unsigned int iphi) const;
+}
 
-      CaloTriggerTower *getTower(const unsigned int ieta, const unsigned int iphi, const unsigned int il );
-      const CaloTriggerTower *getTower(const unsigned int ieta, const unsigned int iphi, const unsigned int il) const;
+const CaloTriggerTower *getTower(const unsigned int ieta, const unsigned int iphi)
+{
 
-      //! return all towers
-      ConstRange getTowers(void) const;
-      Range getTowers(void);
+}
 
-      unsigned int size() const { return _towers.size(); }
-      void compress(const double emin);
-      double getTotalEdep() const;
+CaloTriggerTower *CaloTriggerElement::getTower(const unsigned int ieta, const unsigned int iphi, const unsigned int il )
+{
 
-     protected:
-      CaloTriggerTowerDefs::CalorimeterId _caloid;
-      Map _towers;
+}
 
-      ClassDefOverride(CaloTriggerElement, 1)
-    };
+const CaloTriggerTower *CaloTriggerElement::getTower(const unsigned int ieta, const unsigned int iphi, const unsigned int il)
+{
 
-};
+}
 
-#endif
+//! return all towers
+CaloTriggerElement::ConstRange CaloTriggerElement::getTowers()
+{
+  return make_pair(_towers.begin(), _towers.end());
+}
+
+CaloTriggerElement::Range CaloTriggerElement::getTowers()
+{
+  return make_pair(_towers.begin(), _towers.end());
+}
+
+void CaloTriggerElement::compress(const double emin)
+{
+
+}
+
+double CaloTriggerElement::getTotalEdep()
+{
+
+}
+
+CaloTriggerElement::ClassDefOverride(CaloTriggerElement, 1)
+[
+
+]

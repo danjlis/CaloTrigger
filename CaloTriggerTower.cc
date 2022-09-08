@@ -10,12 +10,12 @@
 
 using namespace std;
 
-CaloTriggerTower::ConstRange CaloTriggerTower::getTowers(void) const
+CaloTriggerTower::ConstRange CaloTriggerTower::getTowers()
 {
   return make_pair(_towers.begin(), _towers.end());
 }
 
-CaloTriggerTower::Range CaloTriggerTower::getTowers(void)
+CaloTriggerTower::Range CaloTriggerTower::getTowers()
 {
   return make_pair(_towers.begin(), _towers.end());
 }
