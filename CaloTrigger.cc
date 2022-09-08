@@ -4,7 +4,7 @@
 
 
 #include "CaloTrigger.h"
-
+#include "CaloTriggerSetup.h"
 #include <calobase/RawCluster.h>
 #include <calobase/RawClusterContainer.h>
 #include <calobase/RawTower.h>
@@ -25,6 +25,18 @@ CaloTrigger::~CaloTrigger(){
 }
 
 int CaloTrigger::Init(PHCompositeNode */* topNode */) {
+  if (!InitializeCaloTriggerElements(,_emcal_trigger_element_map)) {
+    cout<<"CaloTrigger - EMCAL Trigger Map not initialized... Aborting Run."<<endl;
+    return Fun4AllReturnCodes::ABORTRUN;
+  }
+  if (!InitializeCaloTriggerElements(_hcalin_trigger_element_map)) {
+    cout<<"CaloTrigger - HCALIN Trigger Map not initialized... Aborting Run."<<endl;
+    return Fun4AllReturnCodes::ABORTRUN;
+  }
+  if (!InitializeCaloTriggerElements(_hcalout_trigger_element_map)) {
+    cout<<"CaloTrigger - HCALOUT Trigger Map not initialized... Aborting Run."<<endl;
+    return Fun4AllReturnCodes::ABORTRUN;
+  }
   return Fun4AllReturnCodes::EVENT_OK;
 }
 
@@ -75,4 +87,29 @@ RTICLEFLOW"));
     }
 
   return Fun4AllReturnCodes::EVENT_OK;
+}
+
+int CaloTrigger::InitializeCaloTriggerElements(unsigned int detector, CaloTriggerElementMap *calo_trigger_element_map)
+{
+
+
+  switch(detector){
+    case NONE :
+
+      cout<<" You have not chosen a detector..."<<endl;
+      return 0;
+    case CEMC :
+      cout<<" Making Map for the EMCAL"<<endl;
+
+      break;
+    case HCALOUT :
+      cout<<" Making Map for the Outer HCAL"<<endl;
+
+      break;
+    case HCALIN :
+      cout<<" Making Map for the Inner HCAL"<<endl;
+
+      break;
+  }
+  return 1;
 }

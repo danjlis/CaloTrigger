@@ -31,9 +31,11 @@ public:
 
 private:
   int CreateNode(PHCompositeNode *topNode);
-  CaloTriggerElementMap _hcalin_trigger_map;
-  CaloTriggerElementMap _hcalout_trigger_map;
-  CaloTriggerElementMap _emcal_trigger_map;
+  CaloTriggerElementMap _hcalin_trigger_element_map;
+  CaloTriggerElementMap _hcalout_trigger_element_map;
+  CaloTriggerElementMap _emcal_trigger_element_map;
+
+  int InitializeCaloTriggerElements(CaloTriggerElementMap *calo_trigger_element_map);
 
 };
 
