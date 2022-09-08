@@ -33,34 +33,34 @@ public:
     void identify(std::ostream &os = std::cout) const override;
 
 
-      void setCalorimeterID(CaloTriggerElementDefs::CalorimeterId caloid) { _caloid = caloid; }
-      CaloTriggerElementDefs::CalorimeterId getCalorimeterID() { return _caloid; }
+    void setCalorimeterID(CaloTriggerElementDefs::CalorimeterId caloid) { _caloid = caloid; }
+    CaloTriggerElementDefs::CalorimeterId getCalorimeterID() { return _caloid; }
 
-      ConstIterator AddElement(const unsigned int ieta, const unsigned int iphi, CaloTriggerElement *twr);
-      ConstIterator AddElement(CaloTriggerElementDefs::keytype key, CaloTriggerElement *twr);
+    ConstIterator AddElement(const unsigned int ieta, const unsigned int iphi, CaloTriggerElement *twr);
+    ConstIterator AddElement(CaloTriggerElementDefs::keytype key, CaloTriggerElement *twr);
 
-      CaloTriggerElement *getElement(CaloTriggerElementDefs::keytype key);
-      const CaloTriggerElement *getElement(CaloTriggerElementDefs::keytype key) const;
+    CaloTriggerElement *getElement(CaloTriggerElementDefs::keytype key);
+    const CaloTriggerElement *getElement(CaloTriggerElementDefs::keytype key) const;
 
-      CaloTriggerElement *getElement(const unsigned int ieta, const unsigned int iphi);
-      const CaloTriggerElement *getElement(const unsigned int ieta, const unsigned int iphi) const;
+    CaloTriggerElement *getElement(const unsigned int ieta, const unsigned int iphi);
+    const CaloTriggerElement *getElement(const unsigned int ieta, const unsigned int iphi) const;
 
-      CaloTriggerElement *getElement(const unsigned int ieta, const unsigned int iphi, const unsigned int il );
-      const CaloTriggerElement *getElement(const unsigned int ieta, const unsigned int iphi, const unsigned int il) const;
+    CaloTriggerElement *getElement(const unsigned int ieta, const unsigned int iphi, const unsigned int il );
+    const CaloTriggerElement *getElement(const unsigned int ieta, const unsigned int iphi, const unsigned int il) const;
 
-      //! return all Elements
-      ConstRange getElements(void) const;
-      Range getElements(void);
+    //! return all Elements
+    ConstRange getElements(void) const;
+    Range getElements(void);
 
-      unsigned int size() const { return _elements.size(); }
-      void compress(const double emin);
-      double getTotalEdep() const;
+    unsigned int size() const { return _elements.size(); }
+    void compress(const double emin);
+    double getTotalEdep() const;
 
-     protected:
-      CaloTriggerElementDefs::CalorimeterId _caloid;
-      Map _elements;
+   protected:
+    CaloTriggerElementDefs::CalorimeterId _caloid;
+    Map _elements;
 
-      ClassDefOverride(CaloTriggerElement, 1)
-    };
+    ClassDefOverride(CaloTriggerElement, 1)
+
 
 };
