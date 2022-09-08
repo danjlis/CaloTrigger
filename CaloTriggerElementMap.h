@@ -24,9 +24,9 @@ public:
     typedef std::pair<ConstIterator, ConstIterator> ConstRange;
 
 
-    CaloTriggerElement(CaloTriggerElementDefs::CalorimeterId caloid = CaloTriggerElementDefs::NONE) : _caloid(caloid){}
+    CaloTriggerElementMap(CaloTriggerElementDefs::CalorimeterId caloid = CaloTriggerElementDefs::NONE) : _caloid(caloid){}
 
-    ~CaloTriggerElement() override;
+    ~CaloTriggerElementMap() override;
 
     void Reset() override;
     int isValid() const override;

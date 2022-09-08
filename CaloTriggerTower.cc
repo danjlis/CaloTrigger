@@ -4,11 +4,7 @@
 
 #include "CaloTriggerTower.h"
 #include <calobase/RawTower.h>
-
-#include <cstdlib>
-#include <iostream>
-
-using namespace std;
+#include <calobase/RawTowerDefs.h>
 
 CaloTriggerTower::ConstRange CaloTriggerTower::getTowers()
 {
@@ -22,19 +18,19 @@ CaloTriggerTower::Range CaloTriggerTower::getTowers()
 
 CaloTriggerTower::ConstIterator CaloTriggerTower::AddTower(const unsigned int ieta, const int unsigned iphi, RawTower *rawtower)
 {
-  CaloTriggerTowerDefs::keytype key = CaloTriggerTowerDefs::encode_towerid(_caloid, ieta, iphi);
+  RawTowerDefs::keytype key = RawTowerDefs::encode_towerid(_caloid, ieta, iphi);
   _towers[key] = rawtower;
   rawtower->set_id(key);  // force tower key to be synced to container key
 
   return _towers.find(key);
 }
 
-CaloTriggerTower::ConstIterator CaloTriggerTower::AddTower(CaloTriggerTowerDefs::keytype key, RawTower *twr)
+CaloTriggerTower::ConstIterator CaloTriggerTower::AddTower(RawTowerDefs::keytype key, RawTower *twr)
 {
-  if (CaloTriggerTowerDefs::decode_caloid(key) != _caloid)
+  if (RawTowerDefs::decode_caloid(key) != _caloid)
   {
     cout << "CaloTriggerTower::AddTower - Error - adding tower to wrong container! Container CaloID = "
-         << _caloid << ", requested CaloID = " << CaloTriggerTowerDefs::decode_caloid(key) << " based on key " << key << endl;
+         << _caloid << ", requested CaloID = " << RawTowerDefs::decode_caloid(key) << " based on key " << key << endl;
     exit(2);
   }
 
@@ -44,7 +40,7 @@ CaloTriggerTower::ConstIterator CaloTriggerTower::AddTower(CaloTriggerTowerDefs:
   return _towers.find(key);
 }
 
-RawTower *CaloTriggerTower::getTower(CaloTriggerTowerDefs::keytype key)
+RawTower *CaloTriggerTower::getTower(RawTowerDefs::keytype key)
 {
   ConstIterator it = _towers.find(key);
   if (it != _towers.end())
@@ -54,7 +50,7 @@ RawTower *CaloTriggerTower::getTower(CaloTriggerTowerDefs::keytype key)
   return NULL;
 }
 
-const RawTower *CaloTriggerTower::getTower(CaloTriggerTowerDefs::keytype key) const
+const RawTower *CaloTriggerTower::getTower(RawTowerDefs::keytype key) const
 {
   ConstIterator it = _towers.find(key);
   if (it != _towers.end())
@@ -66,25 +62,25 @@ const RawTower *CaloTriggerTower::getTower(CaloTriggerTowerDefs::keytype key) co
 
 RawTower *CaloTriggerTower::getTower(const unsigned int ieta, const unsigned int iphi)
 {
-  CaloTriggerTowerDefs::keytype key = CaloTriggerTowerDefs::encode_towerid(_caloid, ieta, iphi);
+  RawTowerDefs::keytype key = RawTowerDefs::encode_towerid(_caloid, ieta, iphi);
   return getTower(key);
 }
 
 const RawTower *CaloTriggerTower::getTower(const unsigned int ieta, const unsigned int iphi) const
 {
-  CaloTriggerTowerDefs::keytype key = CaloTriggerTowerDefs::encode_towerid(_caloid, ieta, iphi);
+  RawTowerDefs::keytype key = RawTowerDefs::encode_towerid(_caloid, ieta, iphi);
   return getTower(key);
 }
 
 RawTower *CaloTriggerTower::getTower(const unsigned int ieta, const unsigned int iphi , const unsigned int il)
 {
-  CaloTriggerTowerDefs::keytype key = CaloTriggerTowerDefs::encode_towerid(_caloid, ieta, iphi, il);
+  RawTowerDefs::keytype key = RawTowerDefs::encode_towerid(_caloid, ieta, iphi, il);
   return getTower(key);
 }
 
 const RawTower *CaloTriggerTower::getTower(const unsigned int ieta, const unsigned int iphi, const unsigned int il) const
 {
-  CaloTriggerTowerDefs::keytype key = CaloTriggerTowerDefs::encode_towerid(_caloid, ieta, iphi, il);
+  RawTowerDefs::keytype key = RawTowerDefs::encode_towerid(_caloid, ieta, iphi, il);
   return getTower(key);
 }
 
