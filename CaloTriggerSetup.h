@@ -7,6 +7,7 @@
 
 #include <string>
 
+// The enum for Calorimeter ID is declared and defined here
 enum CaloID {
   NONE = 0,
   CEMC = 1,
@@ -14,7 +15,13 @@ enum CaloID {
   HCALIN = 3
 };
 
+
+// Here lies the specs for each detector.
 namespace EMCALSpecs {
+
+  static unsigned int n_elements = 32;
+  static unsigned int n_calotower_per_element = 12;
+  static unsigned int n_tower_per calo_tower = 64;
   static unsigned int n_phi_tower = 256;
   static unsigned int n_eta_tower = 96;
   static unsinged int n_towers = n_phi*n_eta;

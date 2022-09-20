@@ -37,6 +37,7 @@ private:
 
   int InitializeCaloTriggerElements(CaloTriggerElementMap *calo_trigger_element_map);
 
+  bool _debug;
 };
 
 #endif
