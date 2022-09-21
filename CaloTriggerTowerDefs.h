@@ -87,10 +87,6 @@ namespace CaloTriggerTowerDefs{
       return "NONE";
       break;
 
-    case DRCALO:
-      return "DRCALO";
-      break;
-
     case CEMC:
       return "CEMC";
       break;
@@ -118,9 +114,6 @@ namespace CaloTriggerTowerDefs{
 
    else if (caloname == "CEMC")
      return CEMC;
-
-   else if (caloname == "DRCALO")
-     return DRCALO;
 
    else if (caloname == "HCALIN")
      return HCALIN;

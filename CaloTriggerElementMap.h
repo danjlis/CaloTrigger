@@ -60,7 +60,8 @@ public:
     CaloTriggerElementDefs::CalorimeterId _caloid;
     Map _elements;
 
-    ClassDefOverride(CaloTriggerElement, 1)
 
 
 };
+
+#endif

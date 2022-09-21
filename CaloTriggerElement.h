@@ -61,7 +61,6 @@ public:
       Map _towers;
 
       ClassDefOverride(CaloTriggerElement, 1)
-    };
 
 };
 

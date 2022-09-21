@@ -5,6 +5,10 @@
 
 #include "CaloTrigger.h"
 #include "CaloTriggerSetup.h"
+#include "CaloTriggerTower.h"
+#include "CaloTriggerElement.h"
+#include "CaloTriggerElementDefs.h"
+
 #include <calobase/RawCluster.h>
 #include <calobase/RawClusterContainer.h>
 #include <calobase/RawTower.h>
@@ -33,19 +37,22 @@ int CaloTrigger::InitRun(PHCompositeNode *topNode) {
   return CreateNode(topNode);
 }
 
-int CaloTrigger::process_event(PHCompositeNode */* topNode */) {
-  std::cout<<"Initializing Calo Element Maps"<<std::endl;
+int CaloTrigger::process_event(PHCompositeNode *topNode ) {
+  GetNodes(topNode);
+  _emcal_trigger_element_map = new CaloTriggerElementMap(CaloTriggerElementDefs::CEMC);
 
+  std::cout<<"Initializing Calo Element Maps"<<std::endl;
+  
   if (!InitializeCaloTriggerElements(CEMC)) {
-    cout<<"CaloTrigger - EMCAL Trigger Map not initialized... Aborting Run."<<endl;
+    std::cout<<"CaloTrigger - EMCAL Trigger Map not initialized... Aborting Run."<<std::endl;
     return Fun4AllReturnCodes::ABORTRUN;
   }
   if (!InitializeCaloTriggerElements(HCALIN)) {
-    cout<<"CaloTrigger - HCALIN Trigger Map not initialized... Aborting Run."<<endl;
+    std::cout<<"CaloTrigger - HCALIN Trigger Map not initialized... Aborting Run."<<std::endl;
     return Fun4AllReturnCodes::ABORTRUN;
   }
   if (!InitializeCaloTriggerElements(HCALOUT)) {
-    cout<<"CaloTrigger - HCALOUT Trigger Map not initialized... Aborting Run."<<endl;
+    std::cout<<"CaloTrigger - HCALOUT Trigger Map not initialized... Aborting Run."<<std::endl;
     return Fun4AllReturnCodes::ABORTRUN;
   }
 
@@ -67,6 +74,18 @@ int CaloTrigger::End(PHCompositeNode */* topNode */) {
 }
 int CaloTrigger::Reset(PHCompositeNode */* topNode */) {
   return Fun4AllReturnCodes::EVENT_OK;
+}
+
+int CaloTrigger::GetNodes(PHCompositeNode *topNode){
+  
+  _towersRawEM = findNode::getClass<RawTowerContainer>(topNode, "TOWER_RAW_CEMC");
+  if (!_towersRawEM){
+    std::cout<<"Could not find Node: TOWER_RAW_CEMC..."<<std::endl;
+    return 0;
+  }
+
+
+  return 1;
 }
 
 int CaloTrigger::CreateNode(PHCompositeNode *topNode)
@@ -98,58 +117,50 @@ int CaloTrigger::InitializeCaloTriggerElements(unsigned int detector)
   switch(detector){
     case NONE :
 
-      cout<<" You have not chosen a detector..."<<endl;
+      std::cout<<" You have not chosen a detector..."<<std::endl;
       return 0;
     case CEMC :
 
-      cout<<" Making Map for the EMCAL"<<endl;
+      std::cout<<" Making Map for the EMCAL"<<std::endl;
 
-      RawTowerContainer *towersRawEM = findNode::getClass<RawTowerContainer>(topNode, "TOWER_RAW_CEMC");
-      if (!towersRawEM){
-        cout<<"Could not find Node: TOWER_RAW_CEMC..."<<endl;
-        return 0;
-      }
-      RawTowerGeomContainer *geomCEMC = findNode::getClass<RawTowerGeomContainer>(topNode, "TOWERGEOM_CEMC");
-      if (!geomCEMC){
-        cout<<"Could not find Node: TOWERGEOM_CEMC..."<<endl;
-        return 0;
-      }
-
-      for (int i = 0; i < EMCALSpecs::n_elements ; i++){
+      for (unsigned int i = 0; i < EMCALSpecs::n_caloelements ; i++){
         if (_debug){
-          cout<<"Making Element "<< i <<"..."<<endl;
+          std::cout<<"Making Element "<< i <<"..."<<std::endl;
         }
-        CaloTriggerElement *calo_trigger_element = new CaloTriggerElement(CEMC);
-        for (int j = 0; j < EMCALSpecs::n_calotower_per_element; j++){
+        CaloTriggerElement *calo_trigger_element = new CaloTriggerElement(CaloTriggerTowerDefs::CEMC);
+        for (unsigned int j = 0; j < EMCALSpecs::n_calotower_per_element; j++){
           if (_debug){
-            cout<<"Making CaloTower "<<j<<endl;
+            std::cout<<"Making CaloTower "<<j<<std::endl;
           }
           CaloTriggerTower *calo_trigger_tower = new CaloTriggerTower();
 
-          for (int iphi = 0; iphi < EMCALSpecs::n_phi_tower_per_calo_tower;iphi++){
-            const unsigned int iiphi = EMCALSpecs::n_phi_tower_per_calo_tower*i + iphi;
-            for (int ieta = 0; ieta < EMCALSpecs::n_eta_tower_per_calo_tower;ieta++){
-              const unsigned int iieta = EMCALSpecs::n_eta_tower_per_calo_tower*j+ieta;
+          for (unsigned int iphi = 0; iphi < EMCALSpecs::n_phi_tower_per_calotower;iphi++){
+            const unsigned int iiphi = EMCALSpecs::n_phi_tower_per_calotower*i + iphi;
+            for (unsigned int ieta = 0; ieta < EMCALSpecs::n_eta_tower_per_calotower;ieta++){
+              const unsigned int iieta = EMCALSpecs::n_eta_tower_per_calotower*j+ieta;
               if (_debug){
-                cout<<"Adding rawtower "<<ieta<<", "<<iphi<<": "<<iieta<<", "<<iiphi<<endl;
+                std::cout<<"Adding rawtower "<<ieta<<", "<<iphi<<": "<<iieta<<", "<<iiphi<<std::endl;
               }
-              CaloTriggerTower->AddTower(ieta, iphi, towersRawEM->getTower(iieta, iiphi));
+              calo_trigger_tower->AddTower(ieta, iphi, _towersRawEM->getTower(iieta, iiphi));
             }
           }
 
-          CaloTriggerElement->AddTower(j, 0, CaloTriggerTower);
+          calo_trigger_element->AddTower(j, 0, calo_trigger_tower);
         }
-        CaloTriggerElementMap->AddTower(0, i, CaloTriggerElement);
+        calo_trigger_element->identify();
+
+	_emcal_trigger_element_map->AddTower(0, i, calo_trigger_element);
+	
       }
       // We have our element map, we need to add in the elements, into those the towers, into those the raw towers.
 
       break;
     case HCALOUT :
-      cout<<" Making Map for the Outer HCAL"<<endl;
+      std::cout<<" Making Map for the Outer HCAL"<<std::endl;
 
       break;
     case HCALIN :
-      cout<<" Making Map for the Inner HCAL"<<endl;
+      std::cout<<" Making Map for the Inner HCAL"<<std::endl;
 
       break;
   }

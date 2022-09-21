@@ -40,7 +40,7 @@ CaloTriggerTower::ConstIterator CaloTriggerTower::AddTower(RawTowerDefs::keytype
   return _towers.find(key);
 }
 
-RawTower *CaloTriggerTower::getTower(RawTowerDefs::keytype key)
+RawTower * CaloTriggerTower::getTower(RawTowerDefs::keytype key)
 {
   ConstIterator it = _towers.find(key);
   if (it != _towers.end())
@@ -50,7 +50,7 @@ RawTower *CaloTriggerTower::getTower(RawTowerDefs::keytype key)
   return NULL;
 }
 
-const RawTower *CaloTriggerTower::getTower(RawTowerDefs::keytype key) const
+const RawTower * CaloTriggerTower::getTower(RawTowerDefs::keytype key) const
 {
   ConstIterator it = _towers.find(key);
   if (it != _towers.end())
@@ -60,25 +60,25 @@ const RawTower *CaloTriggerTower::getTower(RawTowerDefs::keytype key) const
   return NULL;
 }
 
-RawTower *CaloTriggerTower::getTower(const unsigned int ieta, const unsigned int iphi)
+RawTower * CaloTriggerTower::getTower(const unsigned int ieta, const unsigned int iphi)
 {
   RawTowerDefs::keytype key = RawTowerDefs::encode_towerid(_caloid, ieta, iphi);
   return getTower(key);
 }
 
-const RawTower *CaloTriggerTower::getTower(const unsigned int ieta, const unsigned int iphi) const
+const RawTower * CaloTriggerTower::getTower(const unsigned int ieta, const unsigned int iphi) const
 {
   RawTowerDefs::keytype key = RawTowerDefs::encode_towerid(_caloid, ieta, iphi);
   return getTower(key);
 }
 
-RawTower *CaloTriggerTower::getTower(const unsigned int ieta, const unsigned int iphi , const unsigned int il)
+RawTower * CaloTriggerTower::getTower(const unsigned int ieta, const unsigned int iphi , const unsigned int il)
 {
   RawTowerDefs::keytype key = RawTowerDefs::encode_towerid(_caloid, ieta, iphi, il);
   return getTower(key);
 }
 
-const RawTower *CaloTriggerTower::getTower(const unsigned int ieta, const unsigned int iphi, const unsigned int il) const
+const RawTower * CaloTriggerTower::getTower(const unsigned int ieta, const unsigned int iphi, const unsigned int il) const
 {
   RawTowerDefs::keytype key = RawTowerDefs::encode_towerid(_caloid, ieta, iphi, il);
   return getTower(key);

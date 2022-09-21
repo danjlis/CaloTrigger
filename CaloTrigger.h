@@ -4,7 +4,8 @@
 // CaloTrigger.h
 // Author: Daniel Lis
 // Brief: Header file for the CaloTrigger Class:
-
+#include "CaloTriggerElementMap.h"
+#include <calobase/RawTowerContainer.h>
 #include <fun4all/SubsysReco.h>
 #include <phool/PHCompositeNode.h>
 #include <phool/PHRandomSeed.h>
@@ -30,14 +31,17 @@ public:
     int Reset(PHCompositeNode *topNode) override;
 
 private:
-  int CreateNode(PHCompositeNode *topNode);
-  CaloTriggerElementMap _hcalin_trigger_element_map;
-  CaloTriggerElementMap _hcalout_trigger_element_map;
-  CaloTriggerElementMap _emcal_trigger_element_map;
-
-  int InitializeCaloTriggerElements(CaloTriggerElementMap *calo_trigger_element_map);
-
-  bool _debug;
+    int GetNodes(PHCompositeNode *topNode);
+    int CreateNode(PHCompositeNode *topNode);
+    CaloTriggerElementMap *_hcalin_trigger_element_map;
+    CaloTriggerElementMap *_hcalout_trigger_element_map;
+    CaloTriggerElementMap *_emcal_trigger_element_map;
+    
+    int InitializeCaloTriggerElements(unsigned int detector);
+    
+    bool _debug;
+    RawTowerContainer *_towersRawEM;
+   
 };
 
 #endif

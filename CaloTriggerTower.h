@@ -9,6 +9,7 @@
 
 #include <calobase/RawTower.h>
 #include <calobase/RawTowerContainer.h>
+#include <calobase/RawTowerDefs.h>
 
 #include <string>
 
@@ -18,13 +19,21 @@ class RawTowerContainer;
 class CaloTriggerTower : public PHObject
 {
 public:
-    CaloTriggerTower();
-    ~CaloTriggerTower() override;
+  typedef std::map<RawTowerDefs::keytype, RawTower *> Map;
+  typedef Map::iterator Iterator;
+  typedef Map::const_iterator ConstIterator;
+  typedef std::pair<Iterator, Iterator> Range;
+  typedef std::pair<ConstIterator, ConstIterator> ConstRange;
 
-    void SetLayer(int layer) { _layer = layer; };
-    void SetEtaIndex(int ieta) { _index_eta = ieta; };
-    void SetPhiIndex(int iphi) { _index_phi = iphi; };
-    void InitateTower();
+
+
+  CaloTriggerTower();
+  ~CaloTriggerTower() override;
+  
+  void SetLayer(int layer) { _layer = layer; };
+  void SetEtaIndex(int ieta) { _index_eta = ieta; };
+  void SetPhiIndex(int iphi) { _index_phi = iphi; };
+  void InitateTower();
 private:
   int _layer;
   int _hit;
